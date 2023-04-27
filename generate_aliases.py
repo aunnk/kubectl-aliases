@@ -113,8 +113,10 @@ def main():
             print(f.read())
 
     for cmd in out:
-        print(shellFormatting[shell].format(''.join([a[0] for a in cmd]),
-              ' '.join([a[1] for a in cmd])))
+        full_cmd = ' '.join([a[1] for a in cmd])
+        if ' --watch' in full_cmd:
+            full_cmd = 'watch -n 1 ' + full_cmd.replace(' --watch', '')
+        print(shellFormatting[shell].format(''.join([a[0] for a in cmd]), full_cmd))
 
 
 def gen(parts):
